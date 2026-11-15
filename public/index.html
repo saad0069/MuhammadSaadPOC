@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+    <head>
+        <title>Food Menu</title>
+        <style>
+            /* minimally styled table*/
+            table{
+                border-collapse: collapse;
+                width: 50%;
+                margin-top: 15px;
+            }
+            th, td{
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            th{
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>Menu Items</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id = "food-list">
+
+            </tbody>
+        </table>
+
+        <!--Disclaimer-->
+        <p>Disclaimer: This app is only for demonstrating a student's web development skills.</p>
+
+        <script>
+            //fetch data from GET /food endpoint
+            fetch('/food')
+            .then(response => response.json())
+            .then(data =>{
+
+                // find table body element
+                const tableBody = document.getElementById('food-list');
+
+                // loop through each item and add to table
+                data.forEach(item =>{
+                    const row = `<tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                    </tr>`;
+                    tableBody.inerHTML += row;
+                });
+            })
+            .catch(error =>{
+                console.log('Error fetching foods:', error);
+            });
+        </script>
+    </body>
+</html>
